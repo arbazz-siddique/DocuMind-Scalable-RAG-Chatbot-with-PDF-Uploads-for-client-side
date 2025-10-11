@@ -39,8 +39,8 @@ const AudioUploadComponent: React.FC = () => {
     return new Promise<void>((resolve, reject) => {
       const interval = setInterval(async () => {
         try {
-          // console.log('🔄 Polling audio status for session:', sessionId);
-          // console.log('🔍 Looking for filename:', filename);
+          console.log('🔄 Polling audio status for session:', sessionId);
+          console.log('🔍 Looking for filename:', filename);
           
           const res = await fetch(
             `${process.env.NEXT_PUBLIC_SERVER_URL}/audio/status?sessionId=${encodeURIComponent(sessionId)}`
@@ -53,20 +53,20 @@ const AudioUploadComponent: React.FC = () => {
           const data = await res.json();
           const files: AudioFileStatus[] = data.files || [];
           
-          // console.log('📊 Full status response:', data);
-          // console.log('📁 All files in session:', files);
+          console.log('📊 Full status response:', data);
+          console.log('📁 All files in session:', files);
 
           // FIXED: Use filename parameter for matching
           const currentFile = files.find(f => f.filename === filename);
 
-          // console.log('✅ Found file:', currentFile);
+          console.log('✅ Found file:', currentFile);
 
           if (!currentFile) {
             console.log('❌ Audio file not found in status response. Available files:', files.map(f => f.filename));
             return;
           }
 
-          // console.log('📋 Current file status:', currentFile.status);
+          console.log('📋 Current file status:', currentFile.status);
 
           if (currentFile.status === 'ready') {
             console.log('🎉 Audio processing completed!');
@@ -125,12 +125,12 @@ const AudioUploadComponent: React.FC = () => {
           return;
         }
 
-        // console.log('📤 Starting upload for file:', file.name);
-        // console.log('📝 File details:', {
-        //   name: file.name,
-        //   size: file.size,
-        //   type: file.type
-        // });
+        console.log('📤 Starting upload for file:', file.name);
+        console.log('📝 File details:', {
+          name: file.name,
+          size: file.size,
+          type: file.type
+        });
 
         setIsUploading(true);
         setProgress(0);
