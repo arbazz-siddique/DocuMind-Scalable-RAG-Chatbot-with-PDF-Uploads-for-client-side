@@ -35,8 +35,8 @@ const FileUploadComponent: React.FC = () => {
     return new Promise<void>((resolve, reject) => {
       const interval = setInterval(async () => {
         try {
-          console.log('🔄 Polling PDF status for session:', sessionId);
-          console.log('🔍 Looking for filename:', filename); // Use the parameter
+          // console.log('🔄 Polling PDF status for session:', sessionId);
+          // console.log('🔍 Looking for filename:', filename); // Use the parameter
           
           const res = await fetch(
             `${process.env.NEXT_PUBLIC_SERVER_URL}/pdf/status?sessionId=${encodeURIComponent(sessionId)}`
@@ -49,20 +49,20 @@ const FileUploadComponent: React.FC = () => {
           const data = await res.json();
           const files: PdfFileStatus[] = data.files || [];
           
-          console.log('📊 Full status response:', data);
-          console.log('📁 All files in session:', files);
+          // console.log('📊 Full status response:', data);
+          // console.log('📁 All files in session:', files);
 
           // FIXED: Use the filename parameter instead of uploadedFile?.name
           const currentFile = files.find(f => f.filename === filename);
 
-          console.log('✅ Found file:', currentFile);
+          // console.log('✅ Found file:', currentFile);
 
           if (!currentFile) {
             console.log('❌ PDF file not found in status response. Available files:', files.map(f => f.filename));
             return; // Continue polling
           }
 
-          console.log('📋 Current file status:', currentFile.status);
+          // console.log('📋 Current file status:', currentFile.status);
 
           if (currentFile.status === 'ready') {
             console.log('🎉 PDF processing completed!');
@@ -109,12 +109,12 @@ const FileUploadComponent: React.FC = () => {
       if (el.files && el.files.length > 0) {
         const file = el.files.item(0)
         if (file) {
-          console.log('📤 Starting upload for file:', file.name);
-          console.log('📝 File details:', {
-            name: file.name,
-            size: file.size,
-            type: file.type
-          });
+          // console.log('📤 Starting upload for file:', file.name);
+          // console.log('📝 File details:', {
+          //   name: file.name,
+          //   size: file.size,
+          //   type: file.type
+          // });
           
           setIsUploading(true)
           setIsUploaded(false)
